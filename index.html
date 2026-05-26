@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Track It Sis™ — 30 Days. Your Scalp. Your Receipts.</title>
+<title>Track It™ — 30 Days. Your Scalp. Your Receipts.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -716,8 +716,8 @@
 <section class="hero">
   <div class="hero-left">
     <span class="hero-tag">A free 30-day scalp journal</span>
-    <h1 class="hero-title">Track It<br><em>Sis.</em></h1>
-    <p class="hero-sub">A free, private journal for women experiencing scalp changes, hair loss, or symptoms they haven't been able to name yet. No diagnosis required. No pressure. Just a place to start writing it down.</p>
+    <h1 class="hero-title">Track It</h1>
+    <p class="hero-sub">A free, private journal for anyone experiencing scalp changes, hair loss, or symptoms they haven't been able to name yet. No diagnosis required. No pressure. Just a place to start writing it down.</p>
     <div class="hero-cta">
       <a href="#tracker" class="btn-primary">Start journaling today</a>
       <a href="#about" class="btn-ghost">Learn more</a>
@@ -727,7 +727,7 @@
   <div class="hero-right">
     <div class="hero-card">
       <p class="hero-card-title">Why write it down?</p>
-      <p>When symptoms go untracked, patterns go unnoticed. Many women wait years before getting an accurate diagnosis — partly because there's no record of what they experienced along the way.</p>
+      <p>When symptoms go untracked, patterns go unnoticed. Many patients wait years before getting an accurate diagnosis — partly because there's no record of what they experienced along the way.</p>
       <p>This journal is a first step. Write down what you feel. Note what changed. Keep your own record.</p>
       <p>When the time comes, you'll have something to show your doctor — and you'll be the first to know about updates and new resources from Beyond the Hairline.</p>
     </div>
@@ -739,7 +739,7 @@
   <div class="about-inner">
     <div class="about-text">
       <span class="section-tag">About this journal</span>
-      <h2>Built for women who<br>know <em>something is wrong</em><br>but can't prove it yet</h2>
+      <h2>Built for anyone who<br>knows <em>something is wrong</em><br>but can't prove it yet</h2>
       <p>Scarring alopecia — including CCCA — affects millions of women, disproportionately Black women, and it often goes years without diagnosis. Not because it isn't real, but because patients don't have the documentation to make a case at the doctor's office.</p>
       <p>The Root Journal gives you a simple way to track what you're experiencing — your symptoms, their severity, and your notes — so that when you do see a provider, you walk in with something to show.</p>
       <ul class="about-bullets">
@@ -771,22 +771,6 @@
 </section>
 
 <!-- ── TRACKER ────────────────────────────────────────── -->
-<section class="email-section" id="signup">
-  <div class="email-inner">
-    <span class="section-tag">Stay connected</span>
-    <h2>Stay connected.<br>Be the <em>first to know.</em></h2>
-    <p class="sub">Leave your name and email and I'll keep you updated on new resources, tools, and news from Beyond the Hairline. That's it — no spam, no pressure, unsubscribe any time.</p>
-
-    <div class="email-form" id="signup-form">
-      <input type="text" id="first-name" placeholder="First name" autocomplete="given-name">
-      <input type="email" id="email-input" placeholder="Email address" autocomplete="email">
-      <button onclick="submitSignup()">Keep me updated</button>
-    </div>
-
-    <p class="opt-note">Your information will never be shared or sold. You can remove yourself at any time by replying to any email with "unsubscribe."</p>
-  </div>
-</section>
-
 <section class="tracker-section" id="tracker">
   <div class="tracker-inner">
     <div class="section-header">
@@ -848,7 +832,7 @@
 
 <!-- ── FOOTER ─────────────────────────────────────────── -->
 <footer class="footer">
-  <div class="footer-brand">Track It Sis™</div>
+  <div class="footer-brand">Track It™</div>
   <div class="footer-note">
     A project of <strong style="color:rgba(250,247,242,0.7);">Beyond the Hairline™</strong><br>
     For questions: <a href="mailto:mgeter@601sistas.com" style="color:var(--gold);text-decoration:none;">mgeter@601sistas.com</a>
@@ -858,7 +842,7 @@
     <a href="terms.html" style="color:var(--gold);font-size:13px;text-decoration:none;font-weight:500;">Terms of Service</a>
   </div>
   <div style="margin-top:16px;font-size:11px;color:rgba(250,247,242,0.4);line-height:1.6;text-align:center;max-width:480px;">
-    &copy; 2026 Track It Sis. A project of Chat Chew and Do Empowerment Women Group (CCDEW), a Mississippi nonprofit. All rights reserved. Track It Sis and Beyond the Hairline are trademarks of CCDEW.
+    &copy; 2026 Track It. A project of Chat Chew and Do Empowerment Women Group (CCDEW), a Mississippi nonprofit. All rights reserved. Track It and Beyond the Hairline are trademarks of CCDEW.
   </div>
 </footer>
 
@@ -979,8 +963,8 @@
     try{entries=JSON.parse(localStorage.getItem('tis_entries')||'[]');}catch(e){}
     if(!entries.length){alert('No entries saved yet!');return;}
     var SEV=['None','Very mild','Mild','Moderate','Significant','Severe'];
-    var html='<html><head><title>Track It Sis</title><style>body{font-family:Georgia,serif;max-width:680px;margin:40px auto;padding:20px}.entry{border-top:2px solid #D4AF37;padding:18px 0}.sh{font-size:10px;text-transform:uppercase;color:#7A5478;margin:12px 0 4px}.row{display:flex;justify-content:space-between;font-size:13px;padding:3px 0}</style></head><body>';
-    html+='<h1>Track It Sis - My 30-Day Scalp Journal</h1>';
+    var html='<html><head><title>Track It</title><style>body{font-family:Georgia,serif;max-width:680px;margin:40px auto;padding:20px}.entry{border-top:2px solid #D4AF37;padding:18px 0}.sh{font-size:10px;text-transform:uppercase;color:#7A5478;margin:12px 0 4px}.row{display:flex;justify-content:space-between;font-size:13px;padding:3px 0}</style></head><body>';
+    html+='<h1>Track It - My 30-Day Scalp Journal</h1>';
     for(var i=entries.length-1;i>=0;i--){
       var e=entries[i];
       var date=new Date(e.date+'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
@@ -989,7 +973,7 @@
       if(e.notes&&e.notes.trim())html+='<p>'+e.notes.trim()+'</p>';
       html+='</div>';
     }
-    html+='<p>Track It Sis - Beyond the Hairline - Not a medical tool.</p></body></html>';
+    html+='<p>Track It - Beyond the Hairline - Not a medical tool.</p></body></html>';
     var win=window.open('','_blank');win.document.write(html);win.document.close();win.print();
   }
 
@@ -997,7 +981,7 @@
     var entries=[];
     try{entries=JSON.parse(localStorage.getItem('tis_entries')||'[]');}catch(e){}
     if(!entries.length){alert('No entries saved yet!');return;}
-    var txt='TRACK IT SIS - MY SCALP JOURNAL\nBeyond the Hairline\n\n';
+    var txt='TRACK IT - MY SCALP JOURNAL\nBeyond the Hairline\n\n';
     for(var i=entries.length-1;i>=0;i--){
       var e=entries[i];
       txt+='DAY '+(i+1)+' - '+e.date+'\n';
@@ -1007,7 +991,7 @@
     }
     var blob=new Blob([txt],{type:'text/plain'});
     var url=URL.createObjectURL(blob);
-    var a=document.createElement('a');a.href=url;a.download='TrackItSis.txt';a.click();
+    var a=document.createElement('a');a.href=url;a.download='TrackIt.txt';a.click();
     URL.revokeObjectURL(url);
   }
 
@@ -1068,11 +1052,11 @@
   }
 
   var greetings=[
-    "Hey sis! Good to see you back, {name}.",
-    "Welcome back, {name} chile. Let's get to it.",
+    "Hey there! Good to see you back, {name}.",
+    "Welcome back, {name}. Let's get to it.",
     "Look who's back! How you doing today, {name}?",
-    "There you are, sis. Ready to track, {name}?",
-    "Hey girl, glad you came back, {name}."
+    "There you are. Ready to track, {name}?",
+    "Hey, glad you came back, {name}."
   ];
 
   function showGreeting(name){
@@ -1083,10 +1067,11 @@
   }
 
   (function(){
+    var savedEmail=localStorage.getItem('tis_email');
     var savedName=localStorage.getItem('tis_name');
-    if(savedName){
+    if(savedEmail){
       document.getElementById('signup-popup').style.display='none';
-      showGreeting(savedName);
+      if(savedName){ showGreeting(savedName); }
     }
   })();
 </script>
