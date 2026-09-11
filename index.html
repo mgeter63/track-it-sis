@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Track It™ — 30 Days. Your Scalp. Your Receipts.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
 
 <style>
   :root {
@@ -534,20 +532,9 @@
   }
 
   /* ── EMAIL CAPTURE ────────────────────────────────── */
-  .email-section {
-    background: var(--sage-dk);
-    padding: 6rem;
-    position: relative;
-    overflow: hidden;
-  }
 
-  .email-section::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 80% 20%, rgba(93,58,90,0.3) 0%, transparent 50%);
-    pointer-events: none;
-  }
+
+
 
   .email-inner {
     max-width: 600px;
@@ -665,7 +652,7 @@
     .about { padding: 4rem 2rem; }
     .about-inner { grid-template-columns: 1fr; gap: 3rem; }
     .tracker-section { padding: 4rem 1.5rem; }
-    .email-section { padding: 4rem 2rem; }
+
     .footer { padding: 2rem; flex-direction: column; gap: 0.75rem; text-align: center; }
     .footer-note { text-align: center; }
     body { font-size: 16px; }
@@ -687,14 +674,25 @@
   .popup-form input:focus{border-color:var(--gold);}
   .popup-form button{width:100%;background:var(--gold);color:var(--bark);border:none;border-radius:4px;padding:0.95rem 1rem;font-size:14px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;margin-top:0.5rem;}
   .popup-privacy{font-size:11px;color:rgba(250,247,242,0.45);margin-top:1.25rem;line-height:1.6;}
+  .popup-privacy a{color:var(--gold);}
   .popup-error{font-size:12px;color:#EF5350;margin-bottom:0.5rem;display:none;}
+  .popup-optin{display:flex;gap:10px;align-items:flex-start;text-align:left;font-size:12px;color:rgba(250,247,242,0.75);line-height:1.5;margin:0.25rem 0 0.5rem;cursor:pointer;}
+  .popup-form .popup-optin input{display:inline-block;width:auto;margin:3px 0 0;padding:0;flex-shrink:0;accent-color:var(--gold);}
+  .popup-optin strong{color:var(--gold);font-weight:600;}
+
+  /* Return-to-top button, shown once the page has been scrolled. */
+  #to-top{position:fixed;right:20px;bottom:20px;width:44px;height:44px;border-radius:50%;border:1px solid var(--gold);background:var(--sage-dk);color:var(--gold);font-size:20px;line-height:1;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9000;box-shadow:0 6px 20px rgba(0,0,0,0.25);}
+  #to-top.show{opacity:1;pointer-events:auto;}
+  #to-top:hover{background:var(--gold);color:var(--sage-dk);}
+  #to-top:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+  @media (prefers-reduced-motion:reduce){#to-top{transition:none;}}
 </style>
 </head>
 <body>
 
 <!-- ── GREETING BAR (shown for returning users) ──── -->
 <div id="greeting-bar" style="display:none;background:var(--gold);text-align:center;padding:14px 100px 14px 20px;font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--sage-dk);letter-spacing:0.02em;position:relative;z-index:10;">
-  <a id="signout-link" href="#" onclick="localStorage.removeItem('tis_name');localStorage.removeItem('tis_email');location.reload();return false;" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:#5D3A5A;text-decoration:underline;cursor:pointer;z-index:11;">Sign out</a>
+  <a id="signout-link" href="#" onclick="signOut();return false;" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:#5D3A5A;text-decoration:underline;cursor:pointer;z-index:11;">Sign out</a>
 </div>
 
 <!-- ── HERO ──────────────────────────────────────────── -->
@@ -702,15 +700,19 @@
   <div class="popup-box">
     <span class="popup-tag">Free access</span>
     <h2>Your free journal<br>is <em>waiting for you.</em></h2>
-    <p>Enter your name and a valid email to unlock your 30-day scalp journal. We do not sell or share your information &mdash; ever.</p>
+    <p>Your first name and a valid email are required to receive the tracking app. They are sent securely to a trusted third-party provider so we know the app was received, and are kept for that purpose.</p>
     <div class="popup-form">
       <input type="text" id="popup-name" placeholder="First name" autocomplete="given-name">
       <input type="email" id="popup-email" placeholder="Email address" autocomplete="email">
       <div class="popup-error" id="popup-error">Please enter a valid email address.</div>
+      <label class="popup-optin" for="popup-optin">
+        <input type="checkbox" id="popup-optin">
+        <span><strong>Optional.</strong> Yes, Beyond the Hairline may contact me about future updates, baseline studies, or notifications. Receiving the app does not depend on this.</span>
+      </label>
       <button id="popup-btn" onclick="submitPopup()">Unlock my free journal</button>
     </div>
-    <p class="popup-privacy">&#x1F512; We do not sell, share, or give away your personal information &mdash; ever.</p>
-    <p class="popup-privacy">&#x1F4F1; Please use the same device each time you visit. Your info is saved on this device only.</p>
+    <p class="popup-privacy">We do not sell or rent your information. It is shared only as described in our <a href="privacy.html">Privacy Policy</a>.</p>
+    <p class="popup-privacy">&#x1F4F1; Your journal entries are saved right here in your browser on this device, so they are ready whenever you come back, and they stay private to whoever uses this device or browser. Signing out deletes them.</p>
   </div>
 </div>
 <section class="hero">
@@ -729,7 +731,7 @@
       <p class="hero-card-title">Why write it down?</p>
       <p>When symptoms go untracked, patterns go unnoticed. Many patients wait years before getting an accurate diagnosis — partly because there's no record of what they experienced along the way.</p>
       <p>This journal is a first step. Write down what you feel. Note what changed. Keep your own record.</p>
-      <p>When the time comes, you'll have something to show your doctor — and you'll be the first to know about updates and new resources from Beyond the Hairline.</p>
+      <p>When the time comes, you'll have a printout or export in hand — and, if you choose to hear from us, you'll be the first to know about updates and new resources from Beyond the Hairline.</p>
     </div>
   </div>
 </section>
@@ -740,13 +742,13 @@
     <div class="about-text">
       <span class="section-tag">About this journal</span>
       <h2>Built for anyone who<br>knows <em>something is wrong</em><br>but can't prove it yet</h2>
-      <p>Scarring alopecia — including CCCA — affects millions of women, disproportionately Black women, and it often goes years without diagnosis. Not because it isn't real, but because patients don't have the documentation to make a case at the doctor's office.</p>
-      <p>The Root Journal gives you a simple way to track what you're experiencing — your symptoms, their severity, and your notes — so that when you do see a provider, you walk in with something to show.</p>
+      <p>Scarring alopecia — including CCCA — affects millions of women, disproportionately Black women, and it often goes years without diagnosis. Not because it isn't real, but because patients don't have the documentation to make their case at an appointment.</p>
+      <p>Track It gives you a simple way to track what you're experiencing — your symptoms, their severity, and your notes — so that when you do see a provider, you walk in with something to show.</p>
       <ul class="about-bullets">
-        <li><div class="bullet-icon"></div><span>Free to use — always. No account required to journal.</span></li>
-        <li><div class="bullet-icon"></div><span>Your entries stay on your device. Nothing is sent anywhere without your knowledge.</span></li>
+        <li><div class="bullet-icon"></div><span>Free to use — always. No password and no account to manage, just your first name and email to receive it.</span></li>
+        <li><div class="bullet-icon"></div><span>Your journal entries are saved right here in your browser on this device, so they are ready whenever you come back, and they stay private to whoever uses this device or browser. Only your name and email are sent, securely, to a trusted third-party provider so we know the app was received.</span></li>
         <li><div class="bullet-icon"></div><span>No medical jargon. Plain language, real experience.</span></li>
-        <li><div class="bullet-icon"></div><span>Leave your email only if you want to hear about future research — and opt out any time.</span></li>
+        <li><div class="bullet-icon"></div><span>Hearing from us about updates, baseline studies, or notifications is a separate, optional choice — and you can opt out any time.</span></li>
       </ul>
       <div class="notice-box">
         <p>This is not a medical tool. It does not diagnose, treat, or advise. Please see a board-certified dermatologist specializing in skin of color for any scalp concerns.</p>
@@ -776,7 +778,7 @@
     <div class="section-header">
       <span class="section-tag">Today's entry</span>
       <h2>How is your scalp today?</h2>
-      <p>Rate each symptom from 0 (not present) to 5 (severe). Move the slider or tap a number. Your entries are saved locally on this device.</p>
+      <p>Rate each symptom from 0 (not present) to 5 (severe). Move the slider or tap a number. Your entries are saved right here in your browser on this device, ready whenever you come back.</p>
     </div>
 
     <div class="today-bar">
@@ -822,13 +824,10 @@
       <span style="font-size:13px;color:var(--muted);font-weight:500">Your records:</span>
       <button onclick="printJournal()" style="background:var(--ivory);border:1px solid var(--warm);color:var(--bark);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:9px 18px;border-radius:3px;cursor:pointer">Print / Save as PDF</button>
       <button onclick="downloadJournal()" style="background:var(--ivory);border:1px solid var(--warm);color:var(--bark);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:9px 18px;border-radius:3px;cursor:pointer">Download My Journal</button>
-      <span style="font-size:11px;color:var(--muted);font-style:italic">Share with your doctor or save for your records</span>
+      <span style="font-size:11px;color:var(--muted);font-style:italic">A printout or export of your journal, for your records</span>
     </div>
   </div>
 </section>
-
-<!-- ── EMAIL CAPTURE ──────────────────────────────────── -->
-
 
 <!-- ── FOOTER ─────────────────────────────────────────── -->
 <footer class="footer">
@@ -842,9 +841,11 @@
     <a href="terms.html" style="color:var(--gold);font-size:13px;text-decoration:none;font-weight:500;">Terms of Service</a>
   </div>
   <div style="margin-top:16px;font-size:11px;color:rgba(250,247,242,0.4);line-height:1.6;text-align:center;max-width:480px;">
-    &copy; 2026 Track It. A project of Chat Chew and Do Empowerment Women Group (CCDEW), a Mississippi nonprofit. All rights reserved. Track It and Beyond the Hairline are trademarks of CCDEW.
+    &copy; 2026 Track It. A project of Beyond the Hairline LLC and Chat Chew and Do Empowerment Women Group (CCDEW), a Mississippi nonprofit. All rights reserved. Track It and Beyond the Hairline are trademarks of their respective owners.
   </div>
 </footer>
+
+<button id="to-top" type="button" aria-label="Return to top" title="Return to top">&#8593;</button>
 
 <script>
   var SYMPTOMS=[
@@ -953,42 +954,85 @@
     for(var i=0;i<entries.length;i++){if(entries[i].date===entry.date){entries[i]=entry;exists=true;break;}}
     if(!exists)entries.push(entry);
     localStorage.setItem('tis_entries',JSON.stringify(entries));
-    var btn=document.getElementById('save-btn');
-    btn.textContent='Saved!';btn.style.background='#81C784';
-    setTimeout(function(){btn.textContent="Save today's entry";btn.style.background="";},2000);
+    var msg=document.getElementById('save-msg');
+    msg.textContent='Entry saved to this device.';
+    msg.style.display='inline';
+    clearTimeout(saveEntry._t);
+    saveEntry._t=setTimeout(function(){msg.style.display='none';},3000);
+  }
+
+  // Labels for the export, keyed the same way entries are stored.
+  var SYMPTOM_LABEL={};
+  for(var li=0;li<SYMPTOMS.length;li++){SYMPTOM_LABEL[SYMPTOMS[li].id]=SYMPTOMS[li].label;}
+  var HAIR_GROUP_LABEL={style:'Style or tension',heat:'Heat used',product:'Products on scalp',chemical:'Chemicals or treatments'};
+  var SEV=['None','Very mild','Mild','Moderate','Significant','Severe'];
+
+  // Notes are free text typed by the user and are inserted into printed
+  // markup, so they are escaped rather than interpolated raw.
+  function escapeHtml(s){
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  function loadEntries(){
+    var entries=[];
+    try{entries=JSON.parse(localStorage.getItem('tis_entries')||'[]');}catch(e){}
+    return entries;
   }
 
   function printJournal(){
-    var entries=[];
-    try{entries=JSON.parse(localStorage.getItem('tis_entries')||'[]');}catch(e){}
+    var entries=loadEntries();
     if(!entries.length){alert('No entries saved yet!');return;}
-    var SEV=['None','Very mild','Mild','Moderate','Significant','Severe'];
-    var html='<html><head><title>Track It</title><style>body{font-family:Georgia,serif;max-width:680px;margin:40px auto;padding:20px}.entry{border-top:2px solid #D4AF37;padding:18px 0}.sh{font-size:10px;text-transform:uppercase;color:#7A5478;margin:12px 0 4px}.row{display:flex;justify-content:space-between;font-size:13px;padding:3px 0}</style></head><body>';
+    var html='<html><head><title>Track It</title><style>body{font-family:Georgia,serif;max-width:680px;margin:40px auto;padding:20px}.entry{border-top:2px solid #D4AF37;padding:18px 0}.sh{font-size:10px;text-transform:uppercase;color:#7A5478;margin:12px 0 4px}.row{display:flex;justify-content:space-between;gap:16px;font-size:13px;padding:3px 0}.row span:last-child{text-align:right}p.notes{font-size:13px;white-space:pre-wrap;margin:4px 0 0}</style></head><body>';
     html+='<h1>Track It - My 30-Day Scalp Journal</h1>';
     for(var i=entries.length-1;i>=0;i--){
       var e=entries[i];
       var date=new Date(e.date+'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
-      html+='<div class="entry"><b>Day '+(i+1)+' - '+date+'</b><div class="sh">Symptoms</div>';
-      for(var key in e.ratings){if(e.ratings[key]>0)html+='<div class="row"><span>'+key+'</span><span>'+e.ratings[key]+'/5 '+SEV[e.ratings[key]]+'</span></div>';}
-      if(e.notes&&e.notes.trim())html+='<p>'+e.notes.trim()+'</p>';
+      html+='<div class="entry"><b>Day '+(i+1)+' - '+escapeHtml(date)+'</b>';
+      html+='<div class="sh">Symptoms</div>';
+      var anySym=false;
+      for(var key in e.ratings){
+        if(e.ratings[key]>0){
+          anySym=true;
+          html+='<div class="row"><span>'+escapeHtml(SYMPTOM_LABEL[key]||key)+'</span><span>'+e.ratings[key]+'/5 '+SEV[e.ratings[key]]+'</span></div>';
+        }
+      }
+      if(!anySym)html+='<div class="row"><span>No symptoms rated</span></div>';
+      html+='<div class="sh">Hair care</div>';
+      var hair=e.hair||{};var anyHair=false;
+      for(var g in HAIR_GROUP_LABEL){
+        var list=hair[g]||[];
+        if(list.length){anyHair=true;html+='<div class="row"><span>'+HAIR_GROUP_LABEL[g]+'</span><span>'+escapeHtml(list.join(', '))+'</span></div>';}
+      }
+      if(!anyHair)html+='<div class="row"><span>Nothing logged</span></div>';
+      if(e.notes&&e.notes.trim())html+='<div class="sh">Notes</div><p class="notes">'+escapeHtml(e.notes.trim())+'</p>';
       html+='</div>';
     }
-    html+='<p>Track It - Beyond the Hairline - Not a medical tool.</p></body></html>';
-    var win=window.open('','_blank');win.document.write(html);win.document.close();win.print();
+    html+='<p>Track It - Beyond the Hairline - Not a medical tool. A printout for your records.</p></body></html>';
+    var win=window.open('','_blank');
+    if(!win){alert('Your browser blocked the print window. Please allow pop-ups for this page and try again.');return;}
+    win.document.write(html);win.document.close();win.print();
   }
 
   function downloadJournal(){
-    var entries=[];
-    try{entries=JSON.parse(localStorage.getItem('tis_entries')||'[]');}catch(e){}
+    var entries=loadEntries();
     if(!entries.length){alert('No entries saved yet!');return;}
     var txt='TRACK IT - MY SCALP JOURNAL\nBeyond the Hairline\n\n';
     for(var i=entries.length-1;i>=0;i--){
       var e=entries[i];
       txt+='DAY '+(i+1)+' - '+e.date+'\n';
-      for(var key in e.ratings){txt+='  '+key+': '+e.ratings[key]+'/5\n';}
+      txt+='Symptoms\n';
+      for(var key in e.ratings){txt+='  '+(SYMPTOM_LABEL[key]||key)+': '+e.ratings[key]+'/5 '+SEV[e.ratings[key]]+'\n';}
+      txt+='Hair care\n';
+      var hair=e.hair||{};var anyHair=false;
+      for(var g in HAIR_GROUP_LABEL){
+        var list=hair[g]||[];
+        if(list.length){anyHair=true;txt+='  '+HAIR_GROUP_LABEL[g]+': '+list.join(', ')+'\n';}
+      }
+      if(!anyHair)txt+='  Nothing logged\n';
       if(e.notes&&e.notes.trim())txt+='Notes: '+e.notes.trim()+'\n';
       txt+='\n';
     }
+    txt+='Track It - Beyond the Hairline - Not a medical tool. An export for your records.\n';
     var blob=new Blob([txt],{type:'text/plain'});
     var url=URL.createObjectURL(blob);
     var a=document.createElement('a');a.href=url;a.download='TrackIt.txt';a.click();
@@ -1014,6 +1058,8 @@
       showGreeting(savedName||name);
       return;
     }
+    // The contact checkbox is optional and separate from receiving the app.
+    var optIn=document.getElementById('popup-optin').checked;
     btn.textContent='Sending...';btn.disabled=true;
     var xhr=new XMLHttpRequest();
     xhr.open('POST','https://formspree.io/f/xvzdpqja',true);
@@ -1021,34 +1067,30 @@
     xhr.setRequestHeader('Accept','application/json');
     xhr.onreadystatechange=function(){
       if(xhr.readyState===4){
-        if(xhr.status===200){localStorage.setItem('tis_name',name);localStorage.setItem('tis_email',email);document.getElementById('signup-popup').style.display='none';showGreeting(name);}
+        if(xhr.status===200){
+          localStorage.setItem('tis_name',name);
+          localStorage.setItem('tis_email',email);
+          localStorage.setItem('tis_optin',optIn?'yes':'no');
+          document.getElementById('signup-popup').style.display='none';
+          showGreeting(name);
+        }
         else{btn.textContent='Something went wrong. Try again.';btn.disabled=false;}
       }
     };
-    xhr.send(JSON.stringify({name:name,email:email}));
+    xhr.send(JSON.stringify({name:name,email:email,contact_optin:optIn?'yes':'no'}));
   }
 
-  function submitSignup(){
-    var nameEl=document.getElementById('first-name');
-    var emailEl=document.getElementById('email-input');
-    var btn=emailEl.parentElement.querySelector('button');
-    var name=nameEl.value?nameEl.value.trim():'';
-    var email=emailEl.value?emailEl.value.trim():'';
-    if(!name){nameEl.style.borderColor='#EF5350';nameEl.focus();return;}
-    var validEmail=(email.indexOf('@')>0&&email.split('@').length===2&&email.split('@')[1].indexOf('.')>0);
-    if(!validEmail){emailEl.style.borderColor='#EF5350';emailEl.focus();return;}
-    btn.textContent='Sending...';btn.disabled=true;
-    var xhr=new XMLHttpRequest();
-    xhr.open('POST','https://formspree.io/f/xvzdpqja',true);
-    xhr.setRequestHeader('Content-Type','application/json');
-    xhr.setRequestHeader('Accept','application/json');
-    xhr.onreadystatechange=function(){
-      if(xhr.readyState===4){
-        if(xhr.status===200){btn.textContent='You\u2019re in!';btn.style.background='#81C784';}
-        else{btn.textContent='Something went wrong. Try again.';btn.disabled=false;}
-      }
-    };
-    xhr.send(JSON.stringify({name:name,email:email}));
+  // Signing out clears everything this device holds: name, email, the
+  // contact choice, and every journal entry. The entries live only here,
+  // so the user is warned to print or download first.
+  function signOut(){
+    var ok=confirm('Signing out deletes your journal entries from this device. Print or download them first if you want to keep them.\n\nSign out now?');
+    if(!ok)return;
+    localStorage.removeItem('tis_name');
+    localStorage.removeItem('tis_email');
+    localStorage.removeItem('tis_optin');
+    localStorage.removeItem('tis_entries');
+    location.reload();
   }
 
   var greetings=[
@@ -1062,7 +1104,9 @@
   function showGreeting(name){
     var bar=document.getElementById('greeting-bar');
     var msg=greetings[Math.floor(Math.random()*greetings.length)].replace('{name}',name);
-    bar.innerHTML=msg+'<a id="signout-link" href="#" onclick="localStorage.removeItem(\'tis_name\');localStorage.removeItem(\'tis_email\');location.reload();return false;" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:600;color:#5D3A5A;text-decoration:underline;cursor:pointer;z-index:11;">Sign out</a>';
+    var link=document.getElementById('signout-link');
+    bar.textContent=msg;
+    bar.appendChild(link);
     bar.style.display='block';
   }
 
@@ -1073,6 +1117,18 @@
       document.getElementById('signup-popup').style.display='none';
       if(savedName){ showGreeting(savedName); }
     }
+  })();
+
+  // Return-to-top button.
+  (function(){
+    var b=document.getElementById('to-top');
+    function toggle(){b.className=window.scrollY>300?'show':'';}
+    window.addEventListener('scroll',toggle,{passive:true});
+    toggle();
+    b.onclick=function(){
+      var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+    };
   })();
 </script>
 </body>
